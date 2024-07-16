@@ -5,10 +5,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,11 +21,11 @@ class _LoginScreenState extends State<LoginScreen> {
       if (_emailController.text == _validEmail &&
           _passwordController.text == _validPassword) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login Successful')),
+          const SnackBar(content: Text('Login Successful')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid Credentials')),
+          const SnackBar(content: Text('Invalid Credentials')),
         );
       }
     }
@@ -40,9 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.orange.shade900,
-              Colors.orange.shade800,
-              Colors.orange.shade400,
+              Colors.blue.shade900,
+              Colors.blue.shade800,
+              Colors.blue.shade400,
             ],
           ),
         ),
@@ -56,6 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    // Espacio entre el icono y el texto
                     Text(
                       "Login",
                       style: TextStyle(color: Colors.white, fontSize: 40),
