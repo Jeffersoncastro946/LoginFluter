@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/presentation/screens/RegisterScreen/register_screen.dart';
+import 'package:myapp/presentation/screens/home_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,7 +13,7 @@ class LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final bool estatus = false;
   final String _validEmail = "jefferson.castro@unah.hn";
   final String _validPassword = "20211900096";
 
@@ -22,6 +23,12 @@ class LoginScreenState extends State<LoginScreen> {
           _passwordController.text == _validPassword) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login Successful')),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(userName: _emailController.text),
+          ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -61,7 +68,6 @@ class LoginScreenState extends State<LoginScreen> {
                       color: Colors.white,
                       size: 40,
                     ),
-                    // Espacio entre el icono y el texto
                     Text(
                       "Login",
                       style: TextStyle(color: Colors.white, fontSize: 40),
@@ -163,30 +169,6 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => const RegisterScreen(),
-                      //       ),
-                      //     );
-                      //   },
-                      //   style: ElevatedButton.styleFrom(
-                      //     backgroundColor: Colors.grey,
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(50),
-                      //     ),
-                      //     padding: const EdgeInsets.symmetric(vertical: 15),
-                      //   ),
-                      //   child: const Text(
-                      //     "Register",
-                      //     style: TextStyle(
-                      //       color: Colors.white,
-                      //       fontWeight: FontWeight.bold,
-                      //     ),
-                      //   ),
-                      // ),
                       MaterialButton(
                         onPressed: () {
                           Navigator.push(

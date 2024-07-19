@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/main.dart';
-import 'package:myapp/presentation/Data/User.dart'; // Asegúrate de importar la lista global
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,8 +15,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-
-  // ... (Validadores de campos)
 
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
@@ -94,8 +90,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ... (Diseño de la pantalla)
-
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -252,22 +246,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       MaterialButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // Crear un nuevo usuario y añadirlo a la lista
-                            User newUser = User(
-                              name: _nameController.text,
-                              email: _emailController.text,
-                              phone: _phoneController.text,
-                              password: _passwordController.text,
-                            );
-                            users.add(newUser);
-
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Registration Successful')),
                             );
-
-                            // Navegar a la pantalla de login
-                            Navigator.pop(context);
+                            print("Name: ${_nameController.text}");
+                            print("Email: ${_emailController.text}");
+                            print("Phone: ${_phoneController.text}");
                           }
                         },
                         height: 50,
@@ -277,7 +262,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Register",
+                            "Registrarte",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
