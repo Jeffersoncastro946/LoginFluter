@@ -163,24 +163,47 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => const RegisterScreen(),
+                      //       ),
+                      //     );
+                      //   },
+                      //   style: ElevatedButton.styleFrom(
+                      //     backgroundColor: Colors.grey,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(50),
+                      //     ),
+                      //     padding: const EdgeInsets.symmetric(vertical: 15),
+                      //   ),
+                      //   child: const Text(
+                      //     "Register",
+                      //     style: TextStyle(
+                      //       color: Colors.white,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      // ),
                       MaterialButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterScreen(
-                                  userName: _emailController.text,
-                                ),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterScreen(),
+                            ),
+                          );
                         },
                         height: 50,
+                        color: Colors.grey,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        color: Colors.grey,
                         child: const Center(
                           child: Text(
-                            "Register",
+                            "Registrarte",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
