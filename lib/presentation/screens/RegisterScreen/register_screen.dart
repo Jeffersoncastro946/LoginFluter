@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/main.dart';
+import 'package:myapp/presentation/Data/User.dart'; // Asegúrate de importar la lista global
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -16,9 +18,84 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  // ... (Validadores de campos)
+
+  String? _validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your name';
+    }
+    if (value.length < 3) {
+      return 'Name must be at least 3 characters long';
+    }
+    if (value.length > 10) {
+      return 'Name must be at most 10 characters long';
+    }
+    return null;
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    if (!value.endsWith('.edu.hn')) {
+      return 'Email must end with .edu.hn';
+    }
+    if (value.split('@').length != 2) {
+      return 'Email must contain exactly one @';
+    }
+    return null;
+  }
+
+  String? _validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your phone number';
+    }
+    if (value.length != 8) {
+      return 'Phone number must be exactly 8 digits long';
+    }
+    if (!value.startsWith('3') && !value.startsWith('9')) {
+      return 'Phone number must start with 3 or 9';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+    final uppercaseRegex = RegExp(r'[A-Z]');
+    final specialCharRegex = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
+    if (!uppercaseRegex.hasMatch(value)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+    if (!specialCharRegex.hasMatch(value)) {
+      return 'Password must contain at least one special character';
+    }
+    return null;
+  }
+
+  String? _validateConfirmPassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please confirm your password';
+    }
+    if (value != _passwordController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ... (Diseño de la pantalla)
+
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -96,12 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your name';
-                                }
-                                return null;
-                              },
+                              validator: _validateName,
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
@@ -118,12 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your email';
-                                }
-                                return null;
-                              },
+                              validator: _validateEmail,
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
@@ -140,12 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your phone number';
-                                }
-                                return null;
-                              },
+                              validator: _validatePhone,
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
@@ -163,12 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                return null;
-                              },
+                              validator: _validatePassword,
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
@@ -186,15 +243,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please confirm your password';
-                                }
-                                if (value != _passwordController.text) {
-                                  return 'Passwords do not match';
-                                }
-                                return null;
-                              },
+                              validator: _validateConfirmPassword,
                             ),
                           ],
                         ),
@@ -203,10 +252,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       MaterialButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
+                            // Crear un nuevo usuario y añadirlo a la lista
+                            User newUser = User(
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              phone: _phoneController.text,
+                              password: _passwordController.text,
+                            );
+                            users.add(newUser);
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Registration Successful')),
                             );
+
+                            // Navegar a la pantalla de login
+                            Navigator.pop(context);
                           }
                         },
                         height: 50,
@@ -216,7 +277,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Registrarte",
+                            "Register",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
